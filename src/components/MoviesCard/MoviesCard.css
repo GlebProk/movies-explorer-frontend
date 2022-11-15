@@ -1,0 +1,129 @@
+.moviecard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    max-width: 360px;
+}
+
+.moviecard__block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+
+    background: #222222;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+}
+
+.moviecard__box {
+    height: 201px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    cursor: inherit;
+}
+
+.moviecard__pic {
+    object-fit: cover;
+    width: 100%;
+    max-height: 100%;
+}
+
+.moviecard__pic:hover {
+    cursor: pointer;
+}
+
+.moviecard__info {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0;
+    margin: 18px;
+}
+
+.moviecard__title {
+    padding: 0;
+    margin: 0;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height, or 120% */
+
+    color: #FFFFFF;
+}
+
+.moviecard__duration {
+    margin: auto 0;
+    padding: 0;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    /* identical to box height, or 138% */
+
+    text-align: right;
+
+    color: #8B8B8B;
+}
+
+.moviecard__button {
+    width: 100px;
+    margin: 18px auto;
+
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 9px;
+    letter-spacing: 0px;
+    text-align: center;
+
+    border: none;
+    background: #313131;
+    border-radius: 30px;
+
+    transition: opacity 0.3s ease-in-out;
+    border: none;
+    padding: 0;
+}
+
+.moviecard__button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+    .moviecard__box {
+        height: 190px;
+    }
+}
+
+@media screen and (max-width: 728px) {
+    .moviecard__title {
+        line-height: 15px;
+    }
+}
+
+@media screen and (max-width: 637px) {
+    .moviecard__box {
+        height: 168px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .moviecard__content {
+        max-width: 300px;
+        margin: 0;
+    }
+
+    .moviecard__title {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
