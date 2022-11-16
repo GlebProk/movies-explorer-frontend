@@ -1,0 +1,144 @@
+.footer {
+    width: 100%;
+    background: #202020;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.footer__section {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 79px 70px 0;
+}
+
+.footer__block {
+    padding: 0 0 20px;
+}
+
+.footer__block_title {
+    margin: 0;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #8B8B8B;
+}
+
+.footer__block_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    align-items: center;
+    border-top: 1px solid #424242;
+}
+
+.footer__copyright {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+
+    color: #FFFFFF;
+}
+
+.footer__links {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+.footer__links_item {
+    margin-right: 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+
+    text-align: right;
+
+    color: #FFFFFF;
+    transition: opacity 0.2s ease-out;
+}
+
+.footer__links_item:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.footer__links_item:last-of-type {
+    margin-right: 0;
+}
+
+.footer__links_link {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+@media screen and (max-width: 1023px) {
+    .footer__section {
+        padding: 79px 30px 20px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .footer__section {
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 79px 10px 0;
+    }
+
+    .footer__block_title {
+        font-size: 12px;
+        line-height: 14.52px;
+    }
+
+    .footer__block {
+        padding: 0 0 21px;
+    }
+
+    .footer__block_content {
+        flex-direction: column;
+        margin: 0 0 10px;
+        padding-top: 30px;
+    }
+
+    .footer__copyright {
+        font-size: 12px;
+        line-height: 14.52px;
+        color: #a0a0a0;
+        order: 2;
+        margin: 30px 0 0 0;
+    }
+
+    .footer__links_item {
+        margin: 0 0 12px 0;
+    }
+
+    .footer__links_item:last-of-type {
+        margin: 0;
+    }
+
+    .footer__links {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
