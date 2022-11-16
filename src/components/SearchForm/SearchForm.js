@@ -3,6 +3,12 @@ import './SearchForm.css';
 import SearchIcon from '../../images/find.svg';
 
 function SearchForm() {
+    const [isShortMovie, setIsShortMovie] = React.useState(true);
+
+    function handlePick() {
+        setIsShortMovie(!isShortMovie);
+    }
+
     return (
         <>
             <section className='search'>
@@ -16,8 +22,11 @@ function SearchForm() {
                         </div>
                     </form>
                     <div className='search__short'>
-                        <div className='search__short_button'>
-                            <div className='search__short_tumb'></div>
+                        <div onClick={handlePick}
+                            className='search__short_button'>
+                            <div
+                                className={`search__short_tumb ${isShortMovie ? '_isChoosenButton' : ''}`}>
+                            </div>
                         </div>
                         <p className='search__short_title'>Короткометражки</p>
                     </div>

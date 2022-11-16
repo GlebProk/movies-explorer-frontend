@@ -28,10 +28,12 @@ function Header() {
                 <Route exact path="/">
                     <header className="header">
                         <div className='header__section'>
-                            <img className="header__logo" src={Logo} alt="логотип" />
+                            <Link to='/'>
+                                <img className="header__logo" src={Logo} alt="логотип" />
+                            </Link>
                             <div className='header__nav'>
                                 <Link to='/signup' className='header__link'>Регистрация</Link>
-                                <button className='header__button'>
+                                <button className='header__button' type="button">
                                     <Link to='/signin' className='header__button_link'>Войти</Link>
                                 </button>
                             </div>
@@ -42,9 +44,11 @@ function Header() {
                 <Route path="/movies">
                     <header className="header header_loggedIn">
                         <div className='header__section_loggedIn'>
-                            <img className="header__logo" src={Logo} alt="логотип" />
+                            <Link to='/'>
+                                <img className="header__logo" src={Logo} alt="логотип" />
+                            </Link>
                             {isTablet ? (
-                                <button onClick={handleOpenBurger} className='header__button-burger'>
+                                <button onClick={handleOpenBurger} className='header__button-burger' type="button">
                                     <img src={Burger} alt='кнопка скрытого меню' />
                                 </button>
                             ) : (
@@ -69,7 +73,7 @@ function Header() {
 
                         <div className={`burger__overlay ${isBurgerMenuOpened ? '_showed' : ''}`}>
                             <div className={`burger-menu ${isBurgerMenuOpened ? '_opened' : ''}`}>
-                                <button className='burger__close-button' onClick={handleCloseBurger}>
+                                <button onClick={handleCloseBurger} className='burger__close-button' type="button">
                                     <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
                                 </button>
                                 <div className='burger-menu__links'>
@@ -95,9 +99,11 @@ function Header() {
                 <Route path="/saved-movies">
                     <header className="header header_loggedIn">
                         <div className='header__section_loggedIn'>
-                            <img className="header__logo" src={Logo} alt="логотип" />
+                            <Link to='/'>
+                                <img className="header__logo" src={Logo} alt="логотип" />
+                            </Link>
                             {isTablet ? (
-                                <button onClick={handleOpenBurger} className='header__button-burger'>
+                                <button onClick={handleOpenBurger} className='header__button-burger' type="button">
                                     <img src={Burger} alt='кнопка скрытого меню' />
                                 </button>
                             ) : (
@@ -121,7 +127,7 @@ function Header() {
                         </div>
                         <div className={`burger__overlay ${isBurgerMenuOpened ? '_showed' : ''}`}>
                             <div className={`burger-menu ${isBurgerMenuOpened ? '_opened' : ''}`}>
-                                <button className='burger__close-button' onClick={handleCloseBurger}>
+                                <button onClick={handleCloseBurger} className='burger__close-button' type="button">
                                     <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
                                 </button>
                                 <div className='burger-menu__links'>
@@ -147,9 +153,11 @@ function Header() {
                 <Route path="/profile">
                     <header className="header header_loggedIn">
                         <div className='header__section_loggedIn'>
-                            <img className="header__logo" src={Logo} alt="логотип" />
+                            <Link to='/'>
+                                <img className="header__logo" src={Logo} alt="логотип" />
+                            </Link>
                             {isTablet ? (
-                                <button onClick={handleOpenBurger} className='header__button-burger'>
+                                <button onClick={handleOpenBurger} className='header__button-burger' type="button">
                                     <img src={Burger} alt='кнопка скрытого меню' />
                                 </button>
                             ) : (
@@ -173,7 +181,7 @@ function Header() {
                         </div>
                         <div className={`burger__overlay ${isBurgerMenuOpened ? '_showed' : ''}`}>
                             <div className={`burger-menu ${isBurgerMenuOpened ? '_opened' : ''}`}>
-                                <button className='burger__close-button' onClick={handleCloseBurger}>
+                                <button onClick={handleCloseBurger} className='burger__close-button' type="button">
                                     <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
                                 </button>
                                 <div className='burger-menu__links'>

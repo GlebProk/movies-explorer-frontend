@@ -8,14 +8,12 @@ import Footer from '../Footer/Footer';
 function SavedMovies() {
   return (
     <>
-      <div>
-        <section className='movies'>
-          <Header />
-          <SearchForm />
-          <SavedMoviesCardList />
-          <Footer />
-        </section>
-      </div>
+      <Header />
+      <main className='movies'>
+        <SearchForm />
+        <SavedMoviesCardList />
+      </main>
+      <Footer />
     </>
   );
 }

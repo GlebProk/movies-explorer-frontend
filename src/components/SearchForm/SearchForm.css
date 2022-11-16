@@ -42,7 +42,7 @@
     outline: none;
     background: #202020;
 
-    color: #8B8B8B;
+    color: #FFFFFF;
 
     font-style: normal;
     font-weight: 500;
@@ -120,10 +120,6 @@
     cursor: pointer;
 }
 
-._isChoosenBackground {
-    background-color: #2be080;
-}
-
 .search__short_tumb {
     width: 16px;
     height: 16px;
@@ -134,6 +130,11 @@
     align-self: center;
 }
 
+._isChoosenButton {
+    background-color: #A0A0A0;
+    margin-right: auto;
+    margin-left: 0;
+}
 
 @media screen and (max-width: 900px) {
     .search__container {

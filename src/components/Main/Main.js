@@ -11,15 +11,16 @@ import Footer from '../Footer/Footer';
 function Main() {
     return (
         <>
-            <section>
-                <Header />
+            <Header />
+            <main>
                 <Promo />
                 <AboutProject />
                 <Techs />
                 <AboutMe />
                 <Portfolio />
-                <Footer />
-            </section>
+            </main>
+            <Footer />
+
         </>
     );
 }

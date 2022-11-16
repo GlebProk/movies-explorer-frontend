@@ -8,7 +8,9 @@ function Login() {
         <section className='login'>
             <div className='login__block'>
                 <div className='logo__center'>
-                    <img className="login__logo" src={Logo} alt="логотип" />
+                    <Link to='/'>
+                        <img className="header__logo" src={Logo} alt="логотип" />
+                    </Link>
                 </div>
                 <h2 className='login__heading'>Рады видеть!</h2>
             </div>
@@ -35,7 +37,8 @@ function Login() {
                 />
                 <span className='register__input_error'></span>
 
-                <button type='submit'
+                <button
+                    type='submit'
                     className='login__form_button'>
                     Войти
                 </button>

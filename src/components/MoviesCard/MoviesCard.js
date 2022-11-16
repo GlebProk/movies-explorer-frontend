@@ -25,13 +25,15 @@ function MoviesCard() {
                         <h3 className='moviecard__title'>В погоне за Бенкси</h3>
                         <p className='moviecard__duration'>27 минут</p>
                     </div>
-                    <img className='moviecard__pic' src={Pic1} alt="ntcn" />
+                    <img className='moviecard__pic' src={Pic1} alt="обложка фильма" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button">
+                            <img src={SaveButton} alt='кнопка Сохранить' />
+                        </button>
                     )}
                 </div>
             </section >
@@ -45,11 +47,11 @@ function MoviesCard() {
                     </div>
                     <img className='moviecard__pic' src={Pic2} alt="ntcn" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButtonSaved} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button"><img src={SaveButtonSaved} alt='кнопка Сохранить' /></button>
                     )}
                 </div>
             </section >
@@ -61,11 +63,11 @@ function MoviesCard() {
                     </div>
                     <img className='moviecard__pic' src={Pic} alt="ntcn" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
                     )}
                 </div>
             </section >
@@ -77,11 +79,11 @@ function MoviesCard() {
                     </div>
                     <img className='moviecard__pic' src={Pic3} alt="ntcn" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
                     )}
                 </div>
             </section >
@@ -93,11 +95,11 @@ function MoviesCard() {
                     </div>
                     <img className='moviecard__pic' src={Pic3} alt="ntcn" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
                     )}
                 </div>
             </section >
@@ -109,11 +111,11 @@ function MoviesCard() {
                     </div>
                     <img className='moviecard__pic' src={Pic3} alt="ntcn" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
                     )}
                 </div>
             </section >
@@ -125,11 +127,11 @@ function MoviesCard() {
                     </div>
                     <img className='moviecard__pic' src={Pic3} alt="ntcn" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
                     )}
                 </div>
             </section >
@@ -141,11 +143,11 @@ function MoviesCard() {
                     </div>
                     <img className='moviecard__pic' src={Pic3} alt="ntcn" />
                     {SavedMovie ? (
-                        <button className='moviecard__button'>
+                        <button className='moviecard__button' type="button">
                             <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' ><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
                     )}
                 </div>
             </section >
