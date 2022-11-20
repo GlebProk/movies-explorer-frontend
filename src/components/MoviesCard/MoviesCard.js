@@ -1,153 +1,63 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import SaveButton from '../../images/save-button.svg';
 import SaveButtonSaved from '../../images/save-button_saved.svg';
 import SaveButtonDelete from '../../images/save-button_delete.svg';
-import Pic from '../../images/pic.png';
-import Pic1 from '../../images/pic2.png';
-import Pic2 from '../../images/pic3.png';
-import Pic3 from '../../images/pic4.png';
-
-import { useLocation } from 'react-router-dom';
 
 
-
-function MoviesCard() {
-    let SavedMovie;
+function MoviesCard(props) {
     const { pathname } = useLocation();
-    SavedMovie = pathname === '/saved-movies';
+    let SavedMovies = pathname === '/saved-movies';
+
+    function durationMovie(min) {
+        let hours = Math.trunc(min / 60);
+        let minutes = min % 60;
+        if (min >= 60) {
+            return hours + 'ч ' + minutes + 'м';
+        } else {
+            return minutes + 'м';
+        }
+    }
+
+    function handleSaveMovie() {
+        if (props.isSaved) {
+            props.deleteMovie(props.movieCard);
+        } else if (props.isSaved) {
+            props.deleteMovie(props.movieCard);
+        } else {
+            props.handleSaveMovie(props.movieCard);
+        }
+    }
 
     return (
         <>
             <section className='moviecard'>
                 <div className='moviecard__block'>
                     <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
+                        <h3 className='moviecard__title'>{props.movieCard.nameRU}</h3>
+                        <p className='moviecard__duration'>{durationMovie(props.movieCard.duration)}</p>
                     </div>
-                    <img className='moviecard__pic' src={Pic1} alt="обложка фильма" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
+                    <a className='moviecard__box' href={props.movieCard.trailerLink} target='_blank' rel="noreferrer"  >
+                        <img className='moviecard__pic' src={props.movieCard.image.url ? `https://api.nomoreparties.co${props.movieCard.image.url}` : props.movieCard.image} alt="Кадр из фильма" />
+                    </a>
+                    {SavedMovies ? (
+                        <button className='moviecard__button' type="button" onClick={handleSaveMovie}>
+                            <img src={SaveButtonDelete} alt='кнопка "Удалить фильм из сохраненных"' />
                         </button>
                     ) : (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButton} alt='кнопка Сохранить' />
-                        </button>
-                    )}
-                </div>
-            </section >
-
-
-            <section className='moviecard'>
-                <div className='moviecard__block'>
-                    <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
-                    </div>
-                    <img className='moviecard__pic' src={Pic2} alt="ntcn" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
-                        </button>
-                    ) : (
-                        <button className='moviecard__button' type="button"><img src={SaveButtonSaved} alt='кнопка Сохранить' /></button>
-                    )}
-                </div>
-            </section >
-            <section className='moviecard'>
-                <div className='moviecard__block'>
-                    <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
-                    </div>
-                    <img className='moviecard__pic' src={Pic} alt="ntcn" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
-                        </button>
-                    ) : (
-                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
-                    )}
-                </div>
-            </section >
-            <section className='moviecard'>
-                <div className='moviecard__block'>
-                    <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
-                    </div>
-                    <img className='moviecard__pic' src={Pic3} alt="ntcn" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
-                        </button>
-                    ) : (
-                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
-                    )}
-                </div>
-            </section >
-            <section className='moviecard'>
-                <div className='moviecard__block'>
-                    <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
-                    </div>
-                    <img className='moviecard__pic' src={Pic3} alt="ntcn" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
-                        </button>
-                    ) : (
-                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
-                    )}
-                </div>
-            </section >
-            <section className='moviecard'>
-                <div className='moviecard__block'>
-                    <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
-                    </div>
-                    <img className='moviecard__pic' src={Pic3} alt="ntcn" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
-                        </button>
-                    ) : (
-                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
-                    )}
-                </div>
-            </section >
-            <section className='moviecard'>
-                <div className='moviecard__block'>
-                    <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
-                    </div>
-                    <img className='moviecard__pic' src={Pic3} alt="ntcn" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
-                        </button>
-                    ) : (
-                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
-                    )}
-                </div>
-            </section >
-            <section className='moviecard'>
-                <div className='moviecard__block'>
-                    <div className='moviecard__info'>
-                        <h3 className='moviecard__title'>В погоне за Бенкси</h3>
-                        <p className='moviecard__duration'>27 минут</p>
-                    </div>
-                    <img className='moviecard__pic' src={Pic3} alt="ntcn" />
-                    {SavedMovie ? (
-                        <button className='moviecard__button' type="button">
-                            <img src={SaveButtonDelete} alt='кнопка удаления фильмов из сохранённых' />
-                        </button>
-                    ) : (
-                        <button className='moviecard__button' type="button"><img src={SaveButton} alt='кнопка Сохранить' /></button>
+                        <>
+                            {props.isSaved ?
+                                (
+                                    <button className='moviecard__button' type="button" onClick={handleSaveMovie}>
+                                        <img src={SaveButtonSaved} alt='кнопка "Фильм сохранен"' />
+                                    </button>
+                                ) : (
+                                    <button className='moviecard__button' type="button" onClick={handleSaveMovie}>
+                                        <img src={SaveButton} alt='кнопка "Сохранить фильм"' />
+                                    </button>
+                                )}
+                        </>
                     )}
                 </div>
             </section >

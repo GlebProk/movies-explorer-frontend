@@ -35,6 +35,14 @@
 	align-self: center;
 	justify-self: center;
 	margin: auto;
+	background: #202020;
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 18px;
+	/* identical to box height, or 138% */
+
+
+	color: #FFFFFF;
 }
 
 

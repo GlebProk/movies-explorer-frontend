@@ -52,11 +52,11 @@
 .profile__input-box:first-of-type {
     border-bottom: 1px solid #424242;
     padding-bottom: 16px;
-    margin-bottom: 17px;
+    margin-bottom: 6px;
 }
 
 .profile__input-box:last-of-type {
-    margin-bottom: 220px;
+    padding-bottom: 14px;
 }
 
 .profile__input {
@@ -107,6 +107,7 @@
 
 .profile__form_button {
     width: 100%;
+    margin-top: 210px;
     margin-bottom: 16px;
     padding: 0;
 
@@ -151,16 +152,30 @@
 }
 
 .profile__input_error {
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 12.1px;
-    color: #ee3465;
+    width: 100%;
     display: block;
     min-height: 12px;
     pointer-events: none;
-    align-self: flex-start;
-    position: absolute;
-    bottom: -10px;
+    margin-bottom: 12px;
+    text-align: right;
+
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+}
+
+.profile__message {
+    margin: auto;
+    margin-bottom: 10px;
+    
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    /* identical to box height, or 138% */
+
+    color: #3DDC84;
 }
 
 @media screen and (max-width: 768px) {
