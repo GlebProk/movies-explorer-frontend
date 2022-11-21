@@ -1,3 +1,11 @@
 # movies-explorer-frontend  
   
-Ссылка на макет: https://disk.yandex.ru/d/E7kG4aRwVPNbqg
+https://movie-exp.prokofyev.nomoredomains.club/  
+
+Ссылка на макет: https://disk.yandex.ru/d/E7kG4aRwVPNbqg  
+  
+# movies-explorer-backend  
+
+https://api.movie-exp.prokofyev.nomoredomains.icu/api  
+
+IP Сервера http://62.84.113.249/  

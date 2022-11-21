@@ -197,14 +197,14 @@ function App() {
     }
 
     function handleSaveMovie(card) {
-        setIsSaved(true);
         mainApi.saveMovie(card)
             .then((res) => {
                 localStorage.setItem('savedMovies', JSON.stringify([res, ...savedMovies]));
                 setSavedMovies([res, ...savedMovies]);
+                console.log(res);
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+                console.log(error);
             });
     }
 

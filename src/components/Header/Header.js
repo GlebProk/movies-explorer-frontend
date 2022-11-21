@@ -43,24 +43,56 @@ function Header({ loggedIn }) {
                                     <Link to='/'>
                                         <img className="header__logo" src={Logo} alt="логотип" />
                                     </Link>
-                                    <div className='header__nav_loggedIn'>
-                                        <Link to='/movies' className='header__link_loggedIn'>
-                                            Фильмы
-                                        </Link>
-                                        <Link to='/saved-movies' className='header__link_loggedIn'>
-                                            Сохранённые фильмы
-                                        </Link>
-                                    </div>
-                                    <Link to='/profile' className='header__link_profile'>
-                                        <p className='header__link_profile_title'>Аккаунт</p>
-                                        <div className='header__link_profile_image-box'>
-                                            <img className='header__link_profile_image' src={ProfileIcon} alt='значок аккаунта' />
-                                        </div>
-                                    </Link>
+                                    {isTablet ? (
+                                        <button onClick={handleOpenBurgerMenu} className='header__button-burger' type="button">
+                                            <img src={Burger} alt='кнопка скрытого меню' />
+                                        </button>
+                                    ) : (
+                                        <>
+                                            <div className='header__nav_loggedIn'>
+                                                <Link to='/movies' className='header__link_loggedIn'>
+                                                    Фильмы
+                                                </Link>
+                                                <Link to='/saved-movies' className='header__link_loggedIn'>
+                                                    Сохранённые фильмы
+                                                </Link>
+                                            </div>
+                                            <Link to='/profile' className='header__link_profile'>
+                                                <p className='header__link_profile_title'>Аккаунт</p>
+                                                <div className='header__link_profile_image-box'>
+                                                    <img className='header__link_profile_image' src={ProfileIcon} alt='значок аккаунта' />
+                                                </div>
+                                            </Link>
+                                        </>
+                                    )}
                                 </div>
                             </>
                         )}
 
+                        <div className={`burger__overlay ${isBurgerMenuOpened ? '_showed' : ''}`}>
+                            <div className={`burger-menu ${isBurgerMenuOpened ? '_opened' : ''}`}>
+                                <button onClick={handleCloseBurgerMenu} className='burger__close-button' type="button">
+                                    <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
+                                </button>
+                                <div className='burger-menu__links'>
+                                    <Link to='/' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                        Главная
+                                    </Link>
+                                    <Link to='/movies' className='burger-menu__link _active' onClick={handleCloseBurgerMenu}>
+                                        Фильмы
+                                    </Link>
+                                    <Link to='/saved-movies' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                        Сохранённые фильмы
+                                    </Link>
+                                    <Link to='/profile' className='burger-menu__link_profile' onClick={handleCloseBurgerMenu}>
+                                        <p className='burger-menu__link_profile_title'>Аккаунт</p>
+                                        <div className='header__link_profile_image-box'>
+                                            <img className='burger-menu__link_profile_image' src={ProfileIcon} alt='значок аккаунта' />
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </header>
                 </Route>
 

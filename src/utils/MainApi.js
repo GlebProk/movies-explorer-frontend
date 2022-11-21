@@ -79,14 +79,6 @@ class MainApi {
         })
             .then((res) => this._getResponseData(res));
     }
-
-    getSavedMovies() {
-        return fetch(`${this._baseUrl}/movies`, {
-            headers: this._getHeaders(),
-            credentials: 'include',
-        })
-            .then((res) => this._getResponseData(res));
-    }
 }
 
 const mainApi = new MainApi({
