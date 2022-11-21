@@ -201,7 +201,6 @@ function App() {
             .then((res) => {
                 localStorage.setItem('savedMovies', JSON.stringify([res, ...savedMovies]));
                 setSavedMovies([res, ...savedMovies]);
-                console.log(res);
             })
             .catch((error) => {
                 console.log(error);
