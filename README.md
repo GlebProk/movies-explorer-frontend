@@ -1,3 +1,5 @@
+Ссылка на pull request: https://github.com/GlebProk/movies-explorer-frontend/pull/2  
+
 # movies-explorer-frontend  
   
 https://movie-exp.prokofyev.nomoredomains.club/  
