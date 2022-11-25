@@ -11,7 +11,7 @@ function MoviesCardList(props) {
     function moviesCount() {
         if (windowSize >= LargeWindowSize) return { count: 12, more: 3 };
         if (windowSize >= MediumWindowSize) return { count: 8, more: 2 };
-        if (windowSize >= SmallWindowSize) return { count: 5, more: 1 };
+        if (windowSize >= SmallWindowSize) return { count: 5, more: 2 };
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,16 +47,16 @@ function MoviesCardList(props) {
     return (
         <section className='movies-cardlist'>
             <section className='movies-cardlist__section'>
-                {props.isSearched && props.moviesCards.length === 0 && !props.isLoading
-                    ? (<p className='cards__not-found'>Ничего не найдено</p>)
+                {props.moviesCards.length === 0
+                    ? <p className='cards__not-found'>Ничего не найдено</p>
                     : <ul className='cards__list'>
                         {props?.moviesCards?.reduce((filmsBatch, item) => {
                             if (filmsBatch?.length < filteredMovies?.length) {
                                 filmsBatch.push(
                                     <MoviesCard
-                                        handleSaveMovie={props.handleSaveMovie}
                                         movieCard={item}
                                         key={item.id}
+                                        handleSaveMovie={props.handleSaveMovie}
                                         savedMovies={props.savedMovies}
                                         deleteMovie={props.deleteMovie}
                                         isSaved={props?.savedMovies?.some((card) => card.nameRU.toLowerCase() === item.nameRU.toLowerCase())}

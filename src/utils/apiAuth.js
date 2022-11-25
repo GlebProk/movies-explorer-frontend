@@ -1,4 +1,5 @@
-export const BASE_URL = 'https://api.movie-exp.prokofyev.nomoredomains.icu/api';
+// export const BASE_URL = 'https://api.movie-exp.prokofyev.nomoredomains.icu/api';
+export const BASE_URL = 'http://localhost:3005/api';
 
 function getResponseData(res) {
     if (res.ok) {
@@ -7,7 +8,6 @@ function getResponseData(res) {
     // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
 }
-
 
 export function register(name, email, password) {
     return fetch(`${BASE_URL}/signup`, {
@@ -23,7 +23,6 @@ export function register(name, email, password) {
             return getResponseData(res);
         })
 }
-
 
 // отправляем запрос на роут аутентификации
 export function authorize(email, password) {

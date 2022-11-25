@@ -8,10 +8,23 @@ import Header from '../Header/Header';
 function Profile({ isLoading, onUpdateUser, onSignout, message }) {
     const { email, name } = React.useContext(CurrentUserContext);
 
-    const { values, handleChange, errors } = useFormWithValidation({
+    const { values, handleChange, errors, isValid } = useFormWithValidation({
         name: '',
         email: ''
     })
+
+    const [hasChanges, setHasChanges] = React.useState(false);
+
+    React.useEffect(() => {
+        values.name = name;
+        values.email = email;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    React.useEffect(() => {
+        setHasChanges((values.name !== name) || (values.email !== email));
+    }, [values.name, values.email, name, email]
+    );
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -57,7 +70,11 @@ function Profile({ isLoading, onUpdateUser, onSignout, message }) {
                         </div>
                         {errors.email ? (<span className='profile__input_error'>{errors.email}</span>) : null}
                         <span className='profile__message'>{message}</span>
-                        <button type='submit' className='profile__form_button'>
+                        <button
+                            type='submit'
+                            disabled={!hasChanges || !isValid}
+                            className={`profile__form_button ${!isValid || !hasChanges || isLoading ? 'profile__form_button_disabled' : ''}`}
+                        >
                             Редактировать
                         </button>
                         <Link to='/' className='profile__link' onClick={onSignout}>

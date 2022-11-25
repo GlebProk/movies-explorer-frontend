@@ -57,6 +57,17 @@ class MainApi {
             .then((res) => this._getResponseData(res));
     }
 
+    getSavedMovies() {
+        return fetch(`${this._baseUrl}/movies`, {
+            method: 'GET',
+            headers: this._getHeaders(),
+            credentials: 'include',
+        })
+            .then(res => {
+                return this._getResponseData(res);
+            })
+    }
+
     saveMovie(data) {
         const movieURL = 'https://api.nomoreparties.co';
         return fetch(`${this._baseUrl}/movies`, {
@@ -82,7 +93,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    baseUrl: 'https://api.movie-exp.prokofyev.nomoredomains.icu/api',
+    //baseUrl: 'https://api.movie-exp.prokofyev.nomoredomains.icu/api',
+    baseUrl: 'http://localhost:3005/api',
     headers: {
         'Content-Type': 'application/json'
     },

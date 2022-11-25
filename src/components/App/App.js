@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -17,84 +18,40 @@ import NotFound from '../NotFound/NotFound';
 
 function App() {
     const history = useHistory();
+    const location = useLocation();
     const [currentUser, setCurrentUser] = React.useState({});
-    const [loggedIn, setLoggedIn] = React.useState(false);
-    const [initialCards, setInitialCards] = React.useState([]);
+    const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('isLogin') || false);
     // eslint-disable-next-line no-unused-vars
     const [email, setEmail] = React.useState('');
     const [message, setMessage] = React.useState(null);
-
-    // eslint-disable-next-line no-unused-vars
-    const [isRegistered, setIsRegistered] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
-    const [isSearched, setIsSearched] = React.useState(false);
     const [isSearchedSavedMovie, setIsSearchedSavedMovie] = React.useState(false);
     const [isShortSavedMovie, setIsShortSavedMovie] = React.useState(false);
     // eslint-disable-next-line no-unused-vars
     const [isSaved, setIsSaved] = React.useState(false);
 
-    const [isShortMovieTumb, setIsShortMovieTumb] = React.useState(
-        localStorage.getItem('isShortMovieTumb')
-            ? JSON.parse(localStorage.getItem('isShortMovieTumb'))
-            : false);
-
-    const [isShortSavedMovieTumb, setIsShortSavedMovieTumb] = React.useState(
-        localStorage.getItem('isShortSavedMovieTumb')
-            ? JSON.parse(localStorage.getItem('isShortSavedMovieTumb'))
-            : false);
-
-    let initialCardsValue;
-    if (JSON.parse(localStorage.getItem('isShortMovieTumb'))) {
-        if (localStorage.getItem('searchedCards')) {
-            initialCardsValue = JSON.parse(localStorage.getItem('searchedCards')).filter((item) => item.duration < 40)
-        } else {
-            initialCardsValue = [];
-        }
-    } else {
-        if (localStorage.getItem('searchedCards')) {
-            initialCardsValue = JSON.parse(localStorage.getItem('searchedCards'))
-        } else {
-            initialCardsValue = [];
-        }
-    }
-
-    const [moviesCards, setMoviesCards] = React.useState(initialCardsValue);
-
-    let initialSavedCardsValue;
-
-    if (JSON.parse(localStorage.getItem('isShortSavedMovieTumb'))) {
-        if (localStorage.getItem('savedMovies')) {
-            initialSavedCardsValue = JSON.parse(localStorage.getItem('savedMovies')).filter((item) => item.duration < 40)
-        } else {
-            initialSavedCardsValue = [];
-        }
-    } else {
-        if (localStorage.getItem('savedMovies')) {
-            initialSavedCardsValue = JSON.parse(localStorage.getItem('savedMovies'))
-        } else {
-            initialSavedCardsValue = [];
-        }
-    }
-
-    const [savedMovies, setSavedMovies] = React.useState(initialSavedCardsValue);
+    const [savedMovies, setSavedMovies] = React.useState([]);
 
     function handleTokenCheck() {
         // если у пользователя есть токен в localStorage, 
         // эта функция проверит, действующий он или нет
         const jwt = localStorage.getItem("jwt");
+        console.log(loggedIn);
         if (jwt) {
             apiAuth.checkToken(jwt)
                 .then((res) => {
                     if (res) {
+                        localStorage.setItem('isLogin', true);
                         setLoggedIn(true);
                         setEmail(res.data.email);
-                        history.push('/');
                     }
                 })
                 .catch((err) => {
+                    handleLogout();
                     console.log(`Ошибка: ${err}`)
                 })
         }
+        console.log(loggedIn);
     }
 
     React.useEffect(() => {
@@ -106,11 +63,9 @@ function App() {
         setIsLoading(true);
         apiAuth.register(name, email, password)
             .then(() => {
-                setIsRegistered(true);
-                history.push('/signin');
+                handleLogin(email, password);
             })
             .catch((err) => {
-                setIsRegistered(false);
                 console.log(`Ошибка: ${err}`)
             })
             .finally(() => {
@@ -127,7 +82,7 @@ function App() {
                     handleTokenCheck();
                     setLoggedIn(true);
                     setEmail(email);
-                    history.push('/');
+                    history.push('/movies');
                 }
             })
             .catch((err) => {
@@ -145,7 +100,7 @@ function App() {
                     name: '',
                     email: '',
                 });
-                window.localStorage.clear();
+                localStorage.clear();
                 history.push('/');
             })
             .catch((err) => {
@@ -164,6 +119,24 @@ function App() {
             mainApi.getUserInfo()
                 .then((userInfo) => {
                     setCurrentUser(userInfo.data);
+                })
+                .catch((err) => {
+                    console.log(`${err}`);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        };
+    }, [loggedIn]);
+
+    React.useEffect(() => {
+        if (loggedIn === true) {
+            setIsLoading(true);
+            mainApi.getSavedMovies()
+                .then((res) => {
+                    console.log(res);
+                    setSavedMovies(res || []);
+                    localStorage.setItem('savedMovies', JSON.stringify(res || []));
                 })
                 .catch((err) => {
                     console.log(`${err}`);
@@ -196,177 +169,63 @@ function App() {
                 setIsLoading(false));
     }
 
-    function handleSaveMovie(card) {
-        mainApi.saveMovie(card)
-            .then((res) => {
-                localStorage.setItem('savedMovies', JSON.stringify([res, ...savedMovies]));
-                setSavedMovies([res, ...savedMovies]);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-    function deleteMovie(card) {
-        const movieDeleted = savedMovies.filter((item) => item.nameRU.toLowerCase() === card.nameRU.toLowerCase());
-        mainApi.deleteMovie(movieDeleted[0]._id)
-            .then(() => {
-                localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((i) => i._id !== movieDeleted[0]._id)));
-                setSavedMovies(savedMovies.filter((i) => i._id !== movieDeleted[0]._id));
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-
-    function handleSubmit(searchValue, isSaved) {
-        if (!isSearched) {
-            setIsLoading(true);
-            new Promise(() => {
-                moviesApi.getMovies()
-                    .then((data) => {
-                        if (isSaved === true) {
-                            isShortSavedMovie
-                                ? setSavedMovies(
-                                    JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => {
-                                        return item.duration < 40 && item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                                    })
-                                )
-                                : setSavedMovies(
-                                    JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => {
-                                        return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                                    })
-                                );
-                        } else {
-                            localStorage.setItem('searchedCards', JSON.stringify(data.filter((item) => {
-                                return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                            })
-                            ));
-                            setMoviesCards(
-                                data.filter((item) => {
-                                    return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                                })
-                            );
-                        }
-                        setInitialCards(data);
-                    })
-                    .finally(() => setIsLoading(false));
-            })
-                .catch((err) => {
-                    console.log(`${err}`);
-                });
-        }
-
-        setIsSearchedSavedMovie(searchValue);
-
-        if (isSaved === true) {
-            isShortSavedMovie
-                ? setSavedMovies(
-                    JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => {
-                        return item.duration < 40 && item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                    })
-                )
-                : setSavedMovies(
-                    JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => {
-                        return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                    })
-                );
-        } else {
-            localStorage.setItem('searchedCards', JSON.stringify(initialCards.filter((item) => {
-                return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-            })
-            )
-            );
-            setMoviesCards(
-                initialCards.filter((item) => {
-                    return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                })
-            );
-        }
-        setIsSearched(true);
-    }
-
-    function isShortMovie(value, isSaved) {
-
-        if (isSaved) {
-            setIsShortSavedMovieTumb(value);
-            localStorage.setItem('isShortSavedMovieTumb', value);
-        } else {
-            setIsShortMovieTumb(value);
-            localStorage.setItem('isShortMovieTumb', value);
-        }
-
-        setIsShortSavedMovie(value);
-        if (isSaved === true) {
-            if (isSearchedSavedMovie) {
-                value
-                    ? setSavedMovies(JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => item.duration < 40 && item.nameRU.toLowerCase().includes(isSearchedSavedMovie)))
-                    : setSavedMovies(JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => item.duration > 0 && item.nameRU.toLowerCase().includes(isSearchedSavedMovie)));
-            } else {
-                value ? setSavedMovies(JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => item.duration < 40)) : setSavedMovies(JSON.parse(localStorage.getItem('savedMovies'))?.filter((item) => item.duration > 0));
-            }
-        } else {
-            value ? setMoviesCards(JSON.parse(localStorage.getItem('searchedCards'))?.filter((item) => item.duration < 40)) : setMoviesCards(JSON.parse(localStorage.getItem('searchedCards'))?.filter((item) => item.duration > 0));
-        }
-    }
-
     return (
         <CurrentUserContext.Provider value={currentUser}>
-            <>
-                <Switch>
-                    <Route path="/" exact>
-                        <Main loggedIn={loggedIn} />
-                    </Route>
-                    <ProtectedRoute
-                        path="/movies"
-                        component={Movies}
-                        loggedIn={loggedIn}
-                        isLoading={isLoading}
-                        moviesCards={moviesCards}
-                        handleSubmit={handleSubmit}
-                        isShortMovie={isShortMovie}
-                        handleSaveMovie={handleSaveMovie}
-                        deleteMovie={deleteMovie}
-                        isSearched={isSearched}
-                        isShortMovieTumb={isShortMovieTumb}
-                        savedMovies={savedMovies}
-                    />
-                    <ProtectedRoute
-                        path="/saved-movies"
-                        component={SavedMovies}
-                        loggedIn={loggedIn}
-                        isLoading={isLoading}
-                        isSearched={isSearched}
-                        handleSubmit={handleSubmit}
-                        isShortMovie={isShortMovie}
-                        deleteMovie={deleteMovie}
-                        isShortSavedMovieTumb={isShortSavedMovieTumb}
-                        savedMovies={savedMovies}
-                    />
-                    <ProtectedRoute
-                        path="/profile"
-                        component={Profile}
-                        loggedIn={loggedIn}
-                        isLoading={isLoading}
-                        onUpdateUser={handleUpdateUser}
-                        onSignout={handleLogout}
-                        message={message}
-                    />
-                    <Route path="/signup">
-                        <Register onRegister={handleRegister} isLoading={isLoading} />
-                    </Route>
-                    <Route path="/signin">
-                        <Login onLogin={handleLogin} isLoading={isLoading} />
-                    </Route>
-                    <Route
-                        path='*'>
-                        <NotFound />
-                    </Route>
-                    <Route>
-                        {loggedIn ? <Redirect to='/movies' /> : <Redirect to='/signup' />}
-                    </Route>
-                </Switch>
-            </>
+
+            <Switch>
+                <Route path="/" exact>
+                    <Main loggedIn={loggedIn} />
+                </Route>
+                <ProtectedRoute
+                    path="/movies"
+                    component={Movies}
+                    loggedIn={loggedIn}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    setSavedMovies={setSavedMovies}
+                    savedMovies={savedMovies}
+                    onSignout={handleLogout}
+                />
+                <ProtectedRoute
+                    path="/saved-movies"
+                    component={SavedMovies}
+                    loggedIn={loggedIn}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    setSavedMovies={setSavedMovies}
+                    savedMovies={savedMovies}
+                    onSignout={handleLogout}
+                />
+                <ProtectedRoute
+                    path="/profile"
+                    component={Profile}
+                    loggedIn={loggedIn}
+                    isLoading={isLoading}
+                    onUpdateUser={handleUpdateUser}
+                    onSignout={handleLogout}
+                    message={message}
+                />
+                <Route path="/signup">
+                    {!loggedIn
+                        ? <Register onRegister={handleRegister} isLoading={isLoading} />
+                        : <Redirect to='/' />
+                    }
+                </Route>
+                <Route path="/signin">
+                    {!loggedIn
+                        ? <Login onLogin={handleLogin} isLoading={isLoading} />
+                        : <Redirect to='/' />
+                    }
+                </Route>
+                <Route
+                    path='*'>
+                    <NotFound />
+                </Route>
+                <Route>
+                    {loggedIn ? <Redirect to='/movies' /> : <Redirect to='/signup' />}
+                </Route>
+            </Switch>
+
         </CurrentUserContext.Provider >
     );
 }

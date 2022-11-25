@@ -5,7 +5,7 @@ import useFormWithValidation from '../../hooks/useFormWithValidation';
 import Logo from '../../images/logo.svg';
 
 function Register({ onRegister, isLoading }) {
-    const { values, handleChange, resetForm, errors } = useFormWithValidation();
+    const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
     React.useEffect(() => {
         resetForm({});
@@ -75,7 +75,10 @@ function Register({ onRegister, isLoading }) {
                 />
                 {errors.password ? (<span className='register__input_error'>{errors.password}</span>) : null}
 
-                <button type='submit' className='register__form_button'>
+                <button
+                    type='submit'
+                    className={`register__form_button ${!isValid || isLoading ? 'register__form_button_disabled' : ''} `}
+                >
                     Зарегистрироваться
                 </button>
 

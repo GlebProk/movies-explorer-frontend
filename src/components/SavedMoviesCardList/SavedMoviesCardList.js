@@ -12,7 +12,7 @@ function SavedMoviesCardList(props) {
     function moviesCount() {
         if (windowSize >= LargeWindowSize) return { count: 12, more: 3 };
         if (windowSize >= MediumWindowSize) return { count: 8, more: 2 };
-        if (windowSize >= SmallWindowSize) return { count: 5, more: 1 };
+        if (windowSize >= SmallWindowSize) return { count: 5, more: 2 };
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,10 +28,11 @@ function SavedMoviesCardList(props) {
     };
 
     React.useEffect(() => {
-        const newMovies = props?.moviesCards?.slice(0, moviesCount().count);
+        console.log(props.savedMovies);
+        const newMovies = props?.savedMovies?.slice(0, moviesCount().count);
         setFilteredMovies(newMovies);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.moviesCards, windowSize]);
+    }, [props.savedMovies, windowSize]);
 
     React.useEffect(() => {
         window.addEventListener('resize', onChange);
@@ -42,16 +43,16 @@ function SavedMoviesCardList(props) {
     }, []);
 
     const onMoreButtonClick = () => {
-        setFilteredMovies(props.moviesCards.slice(0, (filteredMovies.length += moviesCount().more)));
+        setFilteredMovies(props.savedMovies.slice(0, (filteredMovies.length += moviesCount().more)));
     };
 
     return (
         <section className='movies-cardlist'>
             <section className='movies-cardlist__section'>
-                {props.isSearched && props.moviesCards.length === 0 && !props.isLoading
+                {props.savedMovies.length === 0
                     ? (<p className='cards__not-found'>Ничего не найдено</p>)
                     : <ul className='cards__list'>
-                        {props?.moviesCards?.reduce((filmsBatch, item) => {
+                        {props?.savedMovies?.reduce((filmsBatch, item) => {
                             if (filmsBatch?.length < filteredMovies?.length) {
                                 filmsBatch.push(
                                     <MoviesCard
@@ -67,7 +68,7 @@ function SavedMoviesCardList(props) {
                     </ul>
                 }
                 <div className='more'>
-                    {props?.moviesCards?.length > filteredMovies?.length
+                    {props?.savedMovies?.length > filteredMovies?.length
                         ? (
                             <button className='more__button' type='button' onClick={onMoreButtonClick}>
                                 Ещё

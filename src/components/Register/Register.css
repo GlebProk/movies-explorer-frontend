@@ -107,6 +107,13 @@
     cursor: pointer;
 }
 
+.register__form_button_disabled {
+	pointer-events: none;
+	cursor: default;
+    color: #C2C2C2;
+	background-color: #F8F8F8;
+}
+
 .register__signin {
     display: flex;
     justify-content: center;
