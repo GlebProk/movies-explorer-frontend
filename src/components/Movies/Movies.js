@@ -9,7 +9,7 @@ import { DURATION_SHORT_FILM } from '../../utils/consts';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 
-function Movies({ isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMovie, setIsLoading, handleLogout }) {
+function Movies({ isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMovie, setIsLoading, handleLogout, allMovies }) {
 
     let initialCardsValue;
 
@@ -70,33 +70,54 @@ function Movies({ isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMo
     }
 
     function handleSubmit(searchValue) {
-        setIsLoading(true);
-        new Promise(() => {
-            moviesApi.getMovies()
-                .then((data) => {
-                    localStorage.setItem('searchedCards', JSON.stringify(data.filter((item) => {
+        if (allMovies.length === 0) {
+            setIsLoading(true);
+            new Promise(() => {
+                moviesApi.getMovies()
+                    .then((data) => {
+                        localStorage.setItem('allMovies', JSON.stringify(data));
+                        localStorage.setItem('searchedCards', JSON.stringify(data.filter((item) => {
+                            return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
+                        })
+                        ));
+                        if (isShortMovieTumb) {
+                            setMoviesCards(
+                                data.filter((item) => {
+                                    return item.duration < DURATION_SHORT_FILM && item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
+                                })
+                            );
+                        } else {
+                            setMoviesCards(
+                                data.filter((item) => {
+                                    return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
+                                })
+                            );
+                        }
+                    })
+                    .finally(() => setIsLoading(false));
+            })
+                .catch((err) => {
+                    console.log(`${err}`);
+                });
+        } else {
+            localStorage.setItem('searchedCards', JSON.stringify(allMovies.filter((item) => {
+                return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
+            })
+            ));
+            if (isShortMovieTumb) {
+                setMoviesCards(
+                    allMovies.filter((item) => {
+                        return item.duration < DURATION_SHORT_FILM && item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
+                    })
+                );
+            } else {
+                setMoviesCards(
+                    allMovies.filter((item) => {
                         return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
                     })
-                    ));
-                    if (isShortMovieTumb) {
-                        setMoviesCards(
-                            data.filter((item) => {
-                                return item.duration < DURATION_SHORT_FILM && item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                            })
-                        );
-                    } else {
-                        setMoviesCards(
-                            data.filter((item) => {
-                                return item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
-                            })
-                        );
-                    }
-                })
-                .finally(() => setIsLoading(false));
-        })
-            .catch((err) => {
-                console.log(`${err}`);
-            });
+                );
+            }
+        }
     }
 
     return (

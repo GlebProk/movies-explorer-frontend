@@ -79,14 +79,17 @@ function MoviesCardList(props) {
                         }, [])}
                     </ul>
                 }
-                <div className='more'>
-                    {props?.moviesCards?.length > filteredMovies?.length
-                        ? (
-                            <button className='more__button' onClick={onMoreButtonClick} type='button'>
-                                Ещё
-                            </button>
-                        ) : null}
-                </div>
+                {props.moviesCards.length === 0
+                    ? <div className='more'></div>
+                    : <div className='more'>
+                        {props?.moviesCards?.length > filteredMovies?.length
+                            ? (
+                                <button className='more__button' onClick={onMoreButtonClick} type='button'>
+                                    Ещё
+                                </button>
+                            ) : null}
+                    </div>
+                }
             </section>
         </section>
     );

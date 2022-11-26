@@ -24,6 +24,7 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(false);
 
     const [savedMovies, setSavedMovies] = React.useState([]);
+    const [allMovies, setAllMovies] = React.useState([]);
 
     function handleTokenCheck() {
         // эта функция проверит, действующий ли jwt
@@ -80,6 +81,10 @@ function App() {
                 if (res.token) {
                     localStorage.setItem('jwt', res.token);
                     localStorage.setItem('isLogin', true);
+                    //кажется костыльное решение, чтобы при первом входе, 
+                    //при нажатии на тумблер, приложение не падало в ошибку на странице.
+                    localStorage.setItem('allMovies', JSON.stringify([]));
+                    localStorage.setItem('searchedCards', JSON.stringify([]));
                     handleTokenCheck();
                     setLoggedIn(true);
                     setEmail(email);
@@ -187,6 +192,7 @@ function App() {
                     setSavedMovies={setSavedMovies}
                     savedMovies={savedMovies}
                     onSignout={handleLogout}
+                    allMovies={allMovies}
                 />
                 <ProtectedRoute
                     path="/saved-movies"
