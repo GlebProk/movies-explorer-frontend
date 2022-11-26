@@ -158,6 +158,18 @@
     color: #EE3465;
 }
 
+.login__message {
+    margin-bottom: 10px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    /* identical to box height, or 138% */
+
+    color: #EE3465;
+}
+
 @media screen and (max-width: 768px) {
     .login__block {
         margin-top: 232px;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, NavLink } from 'react-router-dom';
 import './Header.css';
 import './../App/App.css';
 import Logo from '../../images/logo.svg';
@@ -75,15 +75,15 @@ function Header({ loggedIn }) {
                                     <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
                                 </button>
                                 <div className='burger-menu__links'>
-                                    <Link to='/' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    <NavLink exact to='/' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Главная
-                                    </Link>
-                                    <Link to='/movies' className='burger-menu__link _active' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Фильмы
-                                    </Link>
-                                    <Link to='/saved-movies' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/saved-movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Сохранённые фильмы
-                                    </Link>
+                                    </NavLink>
                                     <Link to='/profile' className='burger-menu__link_profile' onClick={handleCloseBurgerMenu}>
                                         <p className='burger-menu__link_profile_title'>Аккаунт</p>
                                         <div className='header__link_profile_image-box'>
@@ -109,12 +109,12 @@ function Header({ loggedIn }) {
                             ) : (
                                 <>
                                     <div className='header__nav_loggedIn'>
-                                        <Link to='/movies' className='header__link_loggedIn'>
+                                        <NavLink to='/movies' activeClassName='header__link_active' className='header__link_loggedIn'>
                                             Фильмы
-                                        </Link>
-                                        <Link to='/saved-movies' className='header__link_loggedIn'>
+                                        </NavLink>
+                                        <NavLink to='/saved-movies' activeClassName='header__link_active' className='header__link_loggedIn'>
                                             Сохранённые фильмы
-                                        </Link>
+                                        </NavLink>
                                     </div>
                                     <Link to='/profile' className='header__link_profile'>
                                         <p className='header__link_profile_title'>Аккаунт</p>
@@ -132,15 +132,15 @@ function Header({ loggedIn }) {
                                     <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
                                 </button>
                                 <div className='burger-menu__links'>
-                                    <Link to='/' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    <NavLink exact to="/" activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Главная
-                                    </Link>
-                                    <Link to='/movies' className='burger-menu__link _active' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Фильмы
-                                    </Link>
-                                    <Link to='/saved-movies' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/saved-movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Сохранённые фильмы
-                                    </Link>
+                                    </NavLink>
                                     <Link to='/profile' className='burger-menu__link_profile' onClick={handleCloseBurgerMenu}>
                                         <p className='burger-menu__link_profile_title'>Аккаунт</p>
                                         <div className='header__link_profile_image-box'>
@@ -166,12 +166,12 @@ function Header({ loggedIn }) {
                             ) : (
                                 <>
                                     <div className='header__nav_loggedIn'>
-                                        <Link to='/movies' className='header__link_loggedIn'>
+                                        <NavLink to='/movies' activeClassName='header__link_active' className='header__link_loggedIn'>
                                             Фильмы
-                                        </Link>
-                                        <Link to='/saved-movies' className='header__link_loggedIn'>
+                                        </NavLink>
+                                        <NavLink to='/saved-movies' activeClassName='header__link_active' className='header__link_loggedIn'>
                                             Сохранённые фильмы
-                                        </Link>
+                                        </NavLink>
                                     </div>
                                     <Link to='/profile' className='header__link_profile'>
                                         <p className='header__link_profile_title'>Аккаунт</p>
@@ -188,15 +188,15 @@ function Header({ loggedIn }) {
                                     <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
                                 </button>
                                 <div className='burger-menu__links'>
-                                    <Link to='/' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    <NavLink exact to='/' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Главная
-                                    </Link>
-                                    <Link to='/movies' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Фильмы
-                                    </Link>
-                                    <Link to='/saved-movies' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/saved-movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Сохранённые фильмы
-                                    </Link>
+                                    </NavLink>
                                     <Link to='/profile' className='burger-menu__link_profile' onClick={handleCloseBurgerMenu}>
                                         <p className='burger-menu__link_profile_title'>Аккаунт</p>
                                         <div className='header__link_profile_image-box'>
@@ -244,15 +244,15 @@ function Header({ loggedIn }) {
                                     <img src={CloseButton} alt='кнопка закрытия скрытого меню' />
                                 </button>
                                 <div className='burger-menu__links'>
-                                    <Link to='/' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    <NavLink exact to='/' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Главная
-                                    </Link>
-                                    <Link to='/movies' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Фильмы
-                                    </Link>
-                                    <Link to='/saved-movies' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
+                                    </NavLink>
+                                    <NavLink to='/saved-movies' activeClassName='burger-menu__link_active' className='burger-menu__link' onClick={handleCloseBurgerMenu}>
                                         Сохранённые фильмы
-                                    </Link>
+                                    </NavLink>
                                     <Link to='/profile' className='burger-menu__link_profile' onClick={handleCloseBurgerMenu}>
                                         <p className='burger-menu__link_profile_title'>Аккаунт</p>
                                         <div className='header__link_profile_image-box'>

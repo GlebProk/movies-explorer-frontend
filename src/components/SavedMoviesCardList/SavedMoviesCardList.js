@@ -3,16 +3,28 @@ import { debounce } from 'lodash';
 import './SavedMoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 import '../MoviesCardList/MoviesCardList.css';
-import { LargeWindowSize, MediumWindowSize, SmallWindowSize } from '../../utils/consts';
+import {
+    PC_WINDOW_SIZE,
+    TABLET_WINDOW_SIZE,
+    MOBILE_WINDOW_SIZE,
+
+    PC_CARD_COUNT,
+    TABLET_CARD_COUNT,
+    MOBILE_CARD_COUNT,
+
+    PC_CARD_COUNT_MORE,
+    TABLET_CARD_COUNT_MORE,
+    MOBILE_CARD_COUNT_MORE
+} from '../../utils/consts';
 
 function SavedMoviesCardList(props) {
     const [filteredMovies, setFilteredMovies] = React.useState([]);
     const [windowSize, setWindowSize] = React.useState(window.innerWidth);
 
     function moviesCount() {
-        if (windowSize >= LargeWindowSize) return { count: 12, more: 3 };
-        if (windowSize >= MediumWindowSize) return { count: 8, more: 2 };
-        if (windowSize >= SmallWindowSize) return { count: 5, more: 2 };
+        if (windowSize >= PC_WINDOW_SIZE) return { count: PC_CARD_COUNT, more: PC_CARD_COUNT_MORE };
+        if (windowSize >= TABLET_WINDOW_SIZE) return { count: TABLET_CARD_COUNT, more: TABLET_CARD_COUNT_MORE };
+        if (windowSize >= MOBILE_WINDOW_SIZE) return { count: MOBILE_CARD_COUNT, more: MOBILE_CARD_COUNT_MORE };
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,7 +40,6 @@ function SavedMoviesCardList(props) {
     };
 
     React.useEffect(() => {
-        console.log(props.savedMovies);
         const newMovies = props?.savedMovies?.slice(0, moviesCount().count);
         setFilteredMovies(newMovies);
         // eslint-disable-next-line react-hooks/exhaustive-deps

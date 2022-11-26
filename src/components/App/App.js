@@ -1,11 +1,9 @@
 import React from 'react';
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
-import moviesApi from '../../utils/MoviesApi';
 import * as apiAuth from '../../utils/apiAuth';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -18,46 +16,41 @@ import NotFound from '../NotFound/NotFound';
 
 function App() {
     const history = useHistory();
-    const location = useLocation();
     const [currentUser, setCurrentUser] = React.useState({});
     const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('isLogin') || false);
     // eslint-disable-next-line no-unused-vars
     const [email, setEmail] = React.useState('');
     const [message, setMessage] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false);
-    const [isSearchedSavedMovie, setIsSearchedSavedMovie] = React.useState(false);
-    const [isShortSavedMovie, setIsShortSavedMovie] = React.useState(false);
-    // eslint-disable-next-line no-unused-vars
-    const [isSaved, setIsSaved] = React.useState(false);
 
     const [savedMovies, setSavedMovies] = React.useState([]);
 
     function handleTokenCheck() {
-        // если у пользователя есть токен в localStorage, 
-        // эта функция проверит, действующий он или нет
+        // эта функция проверит, действующий ли jwt
         const jwt = localStorage.getItem("jwt");
-        console.log(loggedIn);
-        if (jwt) {
-            apiAuth.checkToken(jwt)
-                .then((res) => {
-                    if (res) {
-                        localStorage.setItem('isLogin', true);
-                        setLoggedIn(true);
-                        setEmail(res.data.email);
-                    }
-                })
-                .catch((err) => {
-                    handleLogout();
-                    console.log(`Ошибка: ${err}`)
-                })
-        }
-        console.log(loggedIn);
+        apiAuth.checkToken(jwt)
+            .then((res) => {
+                if (res) {
+                    localStorage.setItem('isLogin', true);
+                    setLoggedIn(true);
+                    setEmail(res.data.email);
+                }
+            })
+            .catch((err) => {
+                handleLogout();
+                console.log(`Ошибка: ${err}`)
+            })
     }
 
     React.useEffect(() => {
         handleTokenCheck()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    function showMessage(message) {
+        setMessage(message);
+        setTimeout(() => setMessage(''), 10000);
+    }
 
     function handleRegister(name, email, password) {
         setIsLoading(true);
@@ -66,7 +59,14 @@ function App() {
                 handleLogin(email, password);
             })
             .catch((err) => {
-                console.log(`Ошибка: ${err}`)
+                if (err === 'Ошибка: 500') {
+                    return showMessage('Сервер не отвечает');
+                } else if (err === 'Ошибка: 400') {
+                    showMessage('Внесены некорректные данные');
+                } else if (err === 'Ошибка: 409') {
+                    return showMessage('Пользователь с таким email уже существует');
+                }
+                console.log(`${err}`);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -79,6 +79,7 @@ function App() {
             .then((res) => {
                 if (res.token) {
                     localStorage.setItem('jwt', res.token);
+                    localStorage.setItem('isLogin', true);
                     handleTokenCheck();
                     setLoggedIn(true);
                     setEmail(email);
@@ -86,7 +87,14 @@ function App() {
                 }
             })
             .catch((err) => {
-                console.log(`Ошибка: ${err}`)
+                if (err === 'Ошибка: 500') {
+                    return showMessage('Сервер не отвечает');
+                } else if (err === 'Ошибка: 400') {
+                    showMessage('Внесены некорректные данные');
+                } else if (err === 'Ошибка: 401') {
+                    showMessage('Пользователь с такими данными не найден');
+                }
+                console.log(`${err}`);
             })
             .finally(() =>
                 setIsLoading(false));
@@ -104,13 +112,8 @@ function App() {
                 history.push('/');
             })
             .catch((err) => {
-                console.log(err);
+                console.log(`${err}`);
             });
-    }
-
-    function showMessage(message) {
-        setMessage(message);
-        setTimeout(() => setMessage(''), 10000);
     }
 
     React.useEffect(() => {
@@ -134,7 +137,6 @@ function App() {
             setIsLoading(true);
             mainApi.getSavedMovies()
                 .then((res) => {
-                    console.log(res);
                     setSavedMovies(res || []);
                     localStorage.setItem('savedMovies', JSON.stringify(res || []));
                 })
@@ -207,13 +209,13 @@ function App() {
                 />
                 <Route path="/signup">
                     {!loggedIn
-                        ? <Register onRegister={handleRegister} isLoading={isLoading} />
+                        ? <Register onRegister={handleRegister} isLoading={isLoading} message={message} />
                         : <Redirect to='/' />
                     }
                 </Route>
                 <Route path="/signin">
                     {!loggedIn
-                        ? <Login onLogin={handleLogin} isLoading={isLoading} />
+                        ? <Login onLogin={handleLogin} isLoading={isLoading} message={message} />
                         : <Redirect to='/' />
                     }
                 </Route>

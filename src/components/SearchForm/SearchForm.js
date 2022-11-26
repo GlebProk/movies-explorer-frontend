@@ -14,7 +14,7 @@ function SearchForm(props) {
 
     function handlePick() {
         //props.isShortMovie(!isShortMovie);
-        props.isShortMovie(!props.isShortMovieTumb);
+        props.setIsShortMovieTumb(!props.isShortMovieTumb);
         setIsShortMovie(!isShortMovie);
     }
 
@@ -29,11 +29,10 @@ function SearchForm(props) {
 
     }, [location.pathname, setValues, searchValue, setIsValid]);
 
-
     const handleSubmit = (evt) => {
         evt.preventDefault();
         if (isValid) {
-            props.handleSubmit(values.keyWord, props.isShortMovie);
+            props.handleSubmit(values.keyWord, props.isShortMovieTumb);
         } else {
             setIsShowError(true);
         }

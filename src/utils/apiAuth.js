@@ -1,5 +1,5 @@
-// export const BASE_URL = 'https://api.movie-exp.prokofyev.nomoredomains.icu/api';
-export const BASE_URL = 'http://localhost:3005/api';
+export const BASE_URL = 'https://api.movie-exp.prokofyev.nomoredomains.icu/api';
+//export const BASE_URL = 'http://localhost:3005/api';
 
 function getResponseData(res) {
     if (res.ok) {

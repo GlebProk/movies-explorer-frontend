@@ -93,8 +93,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    //baseUrl: 'https://api.movie-exp.prokofyev.nomoredomains.icu/api',
-    baseUrl: 'http://localhost:3005/api',
+    baseUrl: 'https://api.movie-exp.prokofyev.nomoredomains.icu/api',
+    //baseUrl: 'http://localhost:3005/api',
     headers: {
         'Content-Type': 'application/json'
     },

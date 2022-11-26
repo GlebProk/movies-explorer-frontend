@@ -4,7 +4,7 @@ import './Login.css';
 import useFormWithValidation from '../../hooks/useFormWithValidation';
 import Logo from '../../images/logo.svg';
 
-function Login({ onLogin, isLoading }) {
+function Login({ onLogin, isLoading, message }) {
     const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
     React.useEffect(() => {
@@ -57,6 +57,7 @@ function Login({ onLogin, isLoading }) {
                 />
                 {errors.password ? (<span className='register__input_error'>{errors.password}</span>) : null}
 
+                <span className='login__message'>{message}</span>
                 <button
                     type='submit'
                     className={`login__form_button ${!isValid || isLoading ? 'login__form_button_disabled' : ''} `}>

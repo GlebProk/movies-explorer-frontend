@@ -103,6 +103,11 @@
     cursor: pointer;
 }
 
+.header__link_active {
+    font-weight: 500;
+}
+
+
 .header__button {
     margin: auto 0;
     padding: 8px 20px;
@@ -262,7 +267,7 @@
     color: #FFFFFF;
 }
 
-.burger-menu__link:hover {
+.burger-menu__link_active {
     padding-bottom: 4px;
     border-bottom: 2px solid #FFFFFF;
 }

@@ -5,17 +5,17 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
+import { DURATION_SHORT_FILM } from '../../utils/consts';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 
-function Movies({isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMovie, setIsLoading, handleLogout}) 
-{
+function Movies({ isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMovie, setIsLoading, handleLogout }) {
 
     let initialCardsValue;
 
     if (JSON.parse(localStorage.getItem('isShortMovieTumb'))) {
         if (localStorage.getItem('searchedCards')) {
-            initialCardsValue = JSON.parse(localStorage.getItem('searchedCards')).filter((item) => item.duration < 40)
+            initialCardsValue = JSON.parse(localStorage.getItem('searchedCards')).filter((item) => item.duration < DURATION_SHORT_FILM)
         } else {
             initialCardsValue = [];
         }
@@ -38,7 +38,7 @@ function Movies({isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMov
         setIsShortMovieTumb(value);
         localStorage.setItem('isShortMovieTumb', value);
         value
-            ? setMoviesCards(JSON.parse(localStorage.getItem('searchedCards'))?.filter((item) => item.duration < 40))
+            ? setMoviesCards(JSON.parse(localStorage.getItem('searchedCards'))?.filter((item) => item.duration < DURATION_SHORT_FILM))
             : setMoviesCards(JSON.parse(localStorage.getItem('searchedCards'))?.filter((item) => item.duration > 0));
     }
 
@@ -81,7 +81,7 @@ function Movies({isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMov
                     if (isShortMovieTumb) {
                         setMoviesCards(
                             data.filter((item) => {
-                                return item.duration < 40 && item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
+                                return item.duration < DURATION_SHORT_FILM && item.nameRU.toLowerCase().includes(searchValue.trim().toLowerCase());
                             })
                         );
                     } else {
@@ -108,7 +108,7 @@ function Movies({isLoading, handleSubmit, setSavedMovies, savedMovies, deleteMov
                     isShortMovieTumb={isShortMovieTumb}
                     isLoading={isLoading}
                     handleSubmit={handleSubmit}
-                    isShortMovie={isShortMovie}
+                    setIsShortMovieTumb={isShortMovie}
                 />
                 <MoviesCardList
                     moviesCards={moviesCards}

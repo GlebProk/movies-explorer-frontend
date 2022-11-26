@@ -5,7 +5,6 @@ import SaveButton from '../../images/save-button.svg';
 import SaveButtonSaved from '../../images/save-button_saved.svg';
 import SaveButtonDelete from '../../images/save-button_delete.svg';
 
-
 function MoviesCard(props) {
     const { pathname } = useLocation();
     let SavedMovies = pathname === '/saved-movies';
